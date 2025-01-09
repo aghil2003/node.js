@@ -38,7 +38,7 @@ app.set('view engine','ejs');
  
 app.use('/',require('./server/routes/main'));
 app.use('/',require('./server/routes/login'))
-app.use('/',require('./server/routes/admin'));
+// app.use('/',require('./server/routes/admin'));
 
 
 app.listen(PORT,()=>{

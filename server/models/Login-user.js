@@ -6,7 +6,6 @@ const LoginUserSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true, // Ensures no two users can have the same username
     trim: true    // Removes extra spaces
   },
   email: {
@@ -27,7 +26,8 @@ const LoginUserSchema = new Schema({
   updatedAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  role: { type: String, enum: ['Admin', 'User'], default: 'User' }, // Role field
 });
 
 

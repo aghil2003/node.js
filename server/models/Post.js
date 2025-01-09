@@ -12,7 +12,7 @@ const PostSchema = new Schema({
   },
   userId: {
     type: mongoose.Schema.Types.ObjectId, // Reference to the User model
-    ref: 'User', // Ensure this matches your User model name
+    ref: 'Users', // Ensure this matches your User model name
     required: true
   },
   createdAt: {

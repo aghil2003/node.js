@@ -66,6 +66,27 @@
 //     }
 //   });
 
+//   /**
+//  * GET /
+//  * Admin Dashboard
+// */
+// router.get('/dashboard', authMiddleware, async (req, res) => {
+//   try {
+//     const locals = {
+//       title: 'Dashboard',
+//       description: 'Simple Blog created with NodeJs, Express & MongoDb.'
+//     }
+
+//     res.redirect('/login');
+
+
+//   } catch (error) {
+//     console.log(error);
+//   }
+
+// });
+  
+
 
 
 //   /**
@@ -285,17 +306,32 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const authMiddleware = require('../middleware/authMiddleware');
 
-router.get('/login', authController.getLoginPage);
-router.get('/signin', authController.getSigninPage);
-router.get('/register', authController.getRegisterPage);
+ router.get('/login', authController.getLoginPage);
+ router.get('/signin', authController.getSigninPage);
+ router.get('/register', authController.getRegisterPage);
+// router.get('/dashboard', authMiddleware,authController.getDashBoard);
 router.post('/signin', authController.postSignin);
 router.get('/dashboard/:id', authMiddleware, authController.getDashboard);
 router.get('/new-post', authMiddleware, authController.getNewPostPage);
 router.post('/new-post', authMiddleware, authController.postNewPost);
-router.get('/post-edit/:id', authMiddleware, authController.getEditPostPage);
+router.get('/post-edit/:id', authMiddleware, authController.getEdituserPage);
 router.put('/post-edit/:id', authMiddleware, authController.putEditPost);
-router.delete('/post-delete/:id', authMiddleware, authController.deletePost);
+router.delete('/post-delete/:id', authMiddleware, authController.Postdelete);
 router.get('/logout', authController.logout);
 router.post('/register', authController.postRegister);
 
+
+
+
+router.get('/admindashboard', authMiddleware,  authController.getAdminDashboard);
+router.get('/add-post', authMiddleware,  authController.getAddPostPage);
+router.post('/add-post', authMiddleware,  authController.createPost);
+router.get('/edit-post/:id', authMiddleware,  authController.getEditPostPage);
+router.put('/edit-post/:id', authMiddleware,  authController.updatePost);
+router.delete('/delete-post/:id', authMiddleware,  authController.deletePost);
+// router.post('/register',  authController.registerUser);
+// router.get('/logout',  authController.logout) 
+
 module.exports = router;
+
+

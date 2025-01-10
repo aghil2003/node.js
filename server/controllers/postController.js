@@ -19,8 +19,8 @@ exports.getAllPosts = async (req, res) => {
 // Single post page
 exports.getPostById = async (req, res) => {
   try {
-    const slug = req.params.id;
-    const data = await Post.findById({ _id: slug });
+    const id = req.params.id;
+    const data = await Post.findById({ _id: id });
 
     const locals = {
       title: data.title,
@@ -30,7 +30,7 @@ exports.getPostById = async (req, res) => {
     res.render('post', {
       locals,
       data,
-      currentRoute: `/post/${slug}`,
+      currentRoute: `/post/${id}`,
     });
   } catch (error) {
     console.error(error);

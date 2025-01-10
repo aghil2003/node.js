@@ -155,7 +155,7 @@ exports.putEditPost = async (req, res) => {
       body: req.body.Body,
       updatedAt: Date.now()
     });
-    res.redirect(`/post-edit/${req.params.id}`);
+    res.redirect(`/dashboard/${req.userId}`);
   } catch (error) {
     console.log(error);
   }

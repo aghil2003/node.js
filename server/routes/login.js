@@ -303,34 +303,34 @@
 
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
+const blogController = require('../controllers/blogController');
 const authMiddleware = require('../middleware/authMiddleware');
 
- router.get('/login', authController.getLoginPage);
- router.get('/signin', authController.getSigninPage);
- router.get('/register', authController.getRegisterPage);
-// router.get('/dashboard', authMiddleware,authController.getDashBoard);
-router.post('/signin', authController.postSignin);
-router.get('/dashboard/:id', authMiddleware, authController.getDashboard);
-router.get('/new-post', authMiddleware, authController.getNewPostPage);
-router.post('/new-post', authMiddleware, authController.postNewPost);
-router.get('/post-edit/:id', authMiddleware, authController.getEdituserPage);
-router.put('/post-edit/:id', authMiddleware, authController.putEditPost);
-router.delete('/post-delete/:id', authMiddleware, authController.Postdelete);
-router.get('/logout', authController.logout);
-router.post('/register', authController.postRegister);
+ router.get('/login', blogController.getLoginPage);
+ router.get('/signin', blogController.getSigninPage);
+ router.get('/register', blogController.getRegisterPage);
+// router.get('/dashboard', authMiddleware,blogController.getDashBoard);
+router.post('/signin', blogController.postSignin);
+router.get('/dashboard/:id', authMiddleware, blogController.getDashboard);
+router.get('/new-post', authMiddleware, blogController.getNewPostPage);
+router.post('/new-post', authMiddleware, blogController.postNewPost);
+router.get('/post-edit/:id', authMiddleware, blogController.getEdituserPage);
+router.put('/post-edit/:id', authMiddleware, blogController.putEditPost);
+router.delete('/post-delete/:id', authMiddleware, blogController.Postdelete);
+router.get('/logout', blogController.logout);
+router.post('/register', blogController.postRegister);
 
 
 
 
-router.get('/admindashboard', authMiddleware,  authController.getAdminDashboard);
-router.get('/add-post', authMiddleware,  authController.getAddPostPage);
-router.post('/add-post', authMiddleware,  authController.createPost);
-router.get('/edit-post/:id', authMiddleware,  authController.getEditPostPage);
-router.put('/edit-post/:id', authMiddleware,  authController.updatePost);
-router.delete('/delete-post/:id', authMiddleware,  authController.deletePost);
-// router.post('/register',  authController.registerUser);
-// router.get('/logout',  authController.logout) 
+router.get('/admindashboard', authMiddleware,  blogController.getAdminDashboard);
+router.get('/add-post', authMiddleware,  blogController.getAddPostPage);
+router.post('/add-post', authMiddleware,  blogController.createPost);
+router.get('/edit-post/:id', authMiddleware,  blogController.getEditPostPage);
+router.put('/edit-post/:id', authMiddleware, blogController.updatePost);
+router.delete('/delete-post/:id', authMiddleware,  blogController.deletePost);
+// router.post('/register',  blogController.registerUser);
+// router.get('/logout',  blogController.logout) 
 
 module.exports = router;
 

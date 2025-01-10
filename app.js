@@ -21,7 +21,7 @@ app.use(cookieParser());
 app.use( mathodOverride('_method'));
 
 app.use(session({
-    secret: 'keyboard cat',
+    secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized:true,
     store:MongoStore.create({
@@ -38,7 +38,7 @@ app.set('view engine','ejs');
  
 app.use('/',require('./server/routes/main'));
 app.use('/',require('./server/routes/login'))
-// app.use('/',require('./server/routes/admin'));
+
 
 
 app.listen(PORT,()=>{

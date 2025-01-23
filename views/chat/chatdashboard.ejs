@@ -1,0 +1,206 @@
+   <div class="chat-wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <% data.forEach(user => { %>
+       <h3 data-id="<%= user._id %>" data-username="<%= user.username %>">Hello <%= user.username %></h3> 
+      <% }) %>
+      <a id="backsign" href="/dashboard/:id">&larr;</a>
+        <h2>user-list</h2>
+        <ul id="contact-list">
+          <% users.forEach(user => { %>
+            <li class="userBtn"  data-id="<%= user._id %>" data-username="<%= user.username %>"><%= user.username %>
+              <div id="notification-<%= user._id %>" class="notification">0</div>
+            </li>
+          <% }) %>
+        </ul> 
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area">
+      <img id="chatimg" src="/img/chat1.png">
+        <div class="chat-header">
+          <div id="chatUserName">Name</div>
+        </div>
+        <div class="messages" id="messageArea">
+          
+          
+         </div>
+         <form action="" class="message-input" id="input-message">
+          <div>
+            <input type="text" id="messageField" placeholder="Write a message...">
+          </div>
+          <div>
+            <button id="sendMessage">Send</button>
+          </div> 
+        </form>
+        </div>
+        
+    </div>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+// Connect to the WebSocket server
+const socket = io()
+
+// Store the sender ID and receiver ID dynamically
+const heading = document.querySelector("h3");
+const senderId = heading.dataset.id;
+let receiverId;
+
+// Attach event listeners to user buttons for starting a chat
+const userButtons = document.querySelectorAll(".userBtn");
+userButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    const userId = button.getAttribute('data-id');
+    receiverId = userId;
+    socket.emit('userLoggedIn', receiverId);
+    username=  button.getAttribute('data-username');
+    document.getElementById("chatUserName").innerText = username;
+     
+    document.getElementById('messageArea').innerHTML = '';
+
+    const notification = document.getElementById(`notification-${userId}`);
+    if (notification) {
+      notification.style.display = "none";
+      notification.innerText = '0';
+    }
+
+    // Show the chat UI
+    document.getElementById("chatimg").style.display = "none";
+    document.querySelector(".chat-header").style.display = "block";
+    document.getElementById("chatUserName").style.display = "block";
+    document.getElementById("messageArea").style.display = "block";
+    document.getElementById("messageField").style.display = "block";
+    document.getElementById("sendMessage").style.display = "block";
+
+    socket.emit('existsChat',{sender_id: senderId, receiver_id: receiverId,});
+  });
+});
+
+// Handle message sending when the form is submitted
+const chatForm = document.getElementById('input-message');
+chatForm.addEventListener("submit", async (e) => {
+  e.preventDefault(); // Prevent default form submission behavior
+
+  const message = document.getElementById("messageField").value.trim();
+
+  // Validate the message is not empty
+  if (!message) {
+    alert('Message cannot be empty.');
+    return;
+  }
+
+  try {
+    // Send the message to the server via Fetch API
+    const response = await fetch('/saveChat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sender_id: senderId,
+        receiver_id: receiverId,
+        message: message,
+      }),
+    });
+
+    const result = await response.json();
+    console.log(result);
+    
+
+    if (result.success) {
+      // Clear the input field after sending the message
+      document.getElementById("messageField").value = '';
+
+      // Display the sent message in the chat area
+      const chat = result.data.message;
+      const html = `<div class="current-user"><h4>${chat}</h4></div>`;
+      document.getElementById('messageArea').insertAdjacentHTML('beforeend', html);
+
+       const messageArea = document.getElementById('messageArea');
+       requestAnimationFrame(() => {
+        messageArea.scrollTop = messageArea.scrollHeight;
+      });
+
+      // Emit the message to the server via WebSocket (socket.io)
+      socket.emit('newchat', result.data);
+    } else {
+      alert('Failed to send the message. Try again.');
+    }
+  } catch (error) {
+    console.error('An error occurred:', error);
+    alert('An error occurred while sending the message.');
+  }
+});
+
+
+socket.on('message', (message) => {
+  console.log("Received message from server:", message);
+  
+   if(senderId === message.receiver_id && receiverId=== message.sender_id){
+  const chatMessage = message.message;  // assuming `message` object has a 'message' property
+  console.log(chatMessage,"chatmesage");
+
+  const html = `<div class="distance-user"><h4>${chatMessage}</h4></div>`;
+  document.getElementById('messageArea').insertAdjacentHTML('beforeend', html);
+  
+  const messageArea = document.getElementById('messageArea');
+   requestAnimationFrame(() => {
+    messageArea.scrollTop = messageArea.scrollHeight;
+});
+}
+});
+
+
+socket.on('notification', (data) => {
+  console.log("Incoming notification data:", data);
+  // Check if the notification corresponds to the currently open chat
+  if (data.senderId === receiverId) {
+    // If the chat is open, display the message immediately in the chat area
+    const html = `<div class="distance-user"><h4>${data.message}</h4></div>`;
+    document.getElementById('messageArea').insertAdjacentHTML('beforeend', html);
+
+    // Scroll to the bottom of the chat
+    const messageArea = document.getElementById('messageArea');
+    messageArea.scrollTop = messageArea.scrollHeight;
+  } else {
+    // If the chat is not open, display a notification
+    const notification = document.getElementById(`notification-${data.senderId}`);
+    if (notification) {
+      // Update or show the notification bubble
+      let count = parseInt(notification.innerText) || 0;
+      notification.innerText = count + 1;
+      notification.style.display = 'block';
+    } else {
+      console.warn(`No notification element found for sender ${data.senderId}`);
+    }
+  }
+});
+
+
+
+// Listening to the 'loadchats' event from the server
+socket.on('loadchats', function (data) {
+  // Clear the chat area
+  document.getElementById('messageArea').innerHTML = '';
+
+  // Extract chat data
+  const chats = data.chat;
+
+  // Append each chat message to the chat area
+  chats.forEach((chat) => {
+    const addClass = chat.sender_id === senderId ? 'current-user' : 'distance-user';
+    const html = `<div class="${addClass}"><h4>${chat.message}</h4></div>`;
+    document.getElementById('messageArea').insertAdjacentHTML('beforeend', html);
+  });
+
+  // Auto-scroll to the bottom of the chat area
+  const messageArea = document.getElementById('messageArea');
+  messageArea.scrollTop = messageArea.scrollHeight;
+});
+
+ </script>
+

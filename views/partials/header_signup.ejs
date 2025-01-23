@@ -1,25 +1,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 
 <header class="header">
     <a href="/" class="header__logo">User Panel</a>
   
     <nav class="header__nav">
       <ul>
-        <li>
-          <a href="/">Home</a>
-        </li>
-        <li>
-          <a href="/about">About</a>
-        </li>
-        <li>
-          <a href="/contact">Contact</a>
-        </li>
+        <a href="/chatdashboard">
+           Chat Box<i id="notBell" class="fas fa-bell"></i>
+        </a>
       </ul>
   
     </nav>
   
     <div class="header__button">
-      <a href="/">Logout</a>
+      <div class="dropdown" >
+        <% userdata.forEach(user => { %>
+              <button class="logoutBtn" style="text-align: right;">
+                Hello..<%= user.username %>
+              </button>
+              <div class="dropdown-content">
+                <a href="/logout">Logout</a>
+              </div>  
+        <% }) %>
+        </div>
     </div>
   
   </header>

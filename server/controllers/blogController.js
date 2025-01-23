@@ -1,79 +1,13 @@
 const Post = require('../models/Post');
-const LoginUser = require('../models/Login-user');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const jwtSecret = process.env.JWT_SECRET;
+ const LoginUser = require('../models/Login-user');
+// const bcrypt = require('bcrypt');
+// const jwt = require('jsonwebtoken');
+// const jwtSecret = process.env.JWT_SECRET;
 
 const adminLayout = '../views/layout/admin';
+const EditLayout= '../views/layout/edit';
+const chatLayout= '../views/layout/chat';
 
-exports.getLoginPage = async (req, res) => {
-  try {
-    const locals = {
-      title: "Login",
-      description: "Simple Blog created with NodeJs, Express & MongoDb."
-    };
-    res.render('signup/index', { locals });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-exports.getSigninPage = async (req, res) => {
-  try {
-    const locals = {
-      title: "Signin",
-      description: "Simple Blog created with NodeJs, Express & MongoDb."
-    };
-    res.render('signup/signup', { locals, layout: '../views/layout/signup' });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-exports.getRegisterPage = async (req, res) => {
-  try {
-    const locals = {
-      title: "Register",
-      description: "Simple Blog created with NodeJs, Express & MongoDb."
-    };
-    res.render('signup/login', { locals, layout: '../views/layout/signup' });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-exports.postSignin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await LoginUser.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: 'Wrong username or password' });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Wrong username or password' });
-    }
-
-    // console.log(`User Role: ${user.role}`); // Debugging log for role
-
-    const token = jwt.sign({ userId: user._id, role: user.role }, jwtSecret);
-    res.cookie('token', token, { httpOnly: true });
-
-    if (user.role === 'Admin') {
-      return res.redirect(`/admindashboard`);
-    } else if (user.role === 'User') {
-      return res.redirect(`dashboard/:id`);
-    } else {
-      return res.status(403).json({ message: 'Unauthorized role' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
 
 
 
@@ -86,23 +20,27 @@ exports.getDashboard = async (req, res) => {
     };
 
     const userId = req.userId;
-    const data = await Post.find({ userId });
-    res.render('signup/dashboard', { locals, data, layout: '../views/layout/signup' });
+    
+    let userdata=[]
+    const user = await LoginUser.findById(userId)
+    userdata.push(user)
+    console.log(userdata,"user");
+    
+    const data = await Post.find({ userId,isActive: true }).sort({ createdAt: -1 });
+    console.log(data);
+    
+    res.render('signup/dashboard', { locals, data,userdata, layout: '../views/layout/signup' });
   } catch (error) {
     console.log(error);
   }
 };
-
-exports.getDashBoard = async (req, res) => {
+exports.getPostDashboard = async (req, res) => {
   try {
     const locals = {
       title: 'Dashboard',
       description: 'Simple Blog created with NodeJs, Express & MongoDb.'
     };
-
-    const userId = req.userId;
-    const data = await Post.find({ userId });
-    res.redirect('/login');
+    res.render('post ', { locals , layout:EditLayout });
   } catch (error) {
     console.log(error);
   }
@@ -114,7 +52,7 @@ exports.getNewPostPage = async (req, res) => {
       title: 'Add Post',
       description: 'Simple Blog created with NodeJs, Express & MongoDb.'
     };
-    res.render('signup/add-post', { locals, layout: '../views/layout/signup' });
+    res.render('signup/add-post', { locals, layout:EditLayout });
   } catch (error) {
     console.log(error);
   }
@@ -142,7 +80,7 @@ exports.getEdituserPage = async (req, res) => {
       description: 'Free NodeJs User Management System.'
     };
     const data = await Post.findOne({ _id: req.params.id });
-    res.render('signup/post-edit', { locals, data, layout: '../views/layout/signup' });
+    res.render('signup/post-edit', { locals, data, layout:EditLayout });
   } catch (error) {
     console.log(error);
   }
@@ -161,62 +99,42 @@ exports.putEditPost = async (req, res) => {
   }
 };
 
+
+
+
 exports.Postdelete = async (req, res) => {
   try {
-    await Post.deleteOne({ _id: req.params.id });
-    res.redirect(`/dashboard/${req.userId}`);
+    // Update the isActive field to false instead of deleting the post
+    const result = await Post.updateOne(
+      { _id: req.params.id }, // Find the post by its ID
+      { $set: { isActive: false } } // Set the isActive field to false
+    );
+
+    if (result.nModified === 0) {
+      return res.status(404).json({ error: 'Post not found or already inactive' });
+    }
+
+    res.status(200).json({ message: 'Post is now inactive successfully' });
   } catch (error) {
-    console.log(error);
+    console.error(`Error updating post: ${error.message}`);
+    res.status(500).json({ error: 'Failed to update the post' });
   }
 };
+
 
 exports.logout = (req, res) => {
-  res.clearCookie('token');
-  res.redirect('/');
-};
-
-// exports.postRegister = async (req, res) => {
-//   try {
-//     const { username, password, email } = req.body;
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     try {
-//       await LoginUser.create({ username, email, password: hashedPassword });
-//       res.redirect('/signin');
-//     } catch (error) {
-//       if (error.code === 11000) {
-//         res.status(409).json({ message: 'User already in use' });
-//       } else {
-//         res.status(500).json({ message: 'Internal server error' });
-//       }
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-exports.postRegister = async (req, res) => {
-  try {
-    const { username, password, email } = req.body;
-    console.log(req.body);
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    try {
-      await LoginUser.create({ username, email, password: hashedPassword });
-      res.redirect('/signin');
-    } catch (error) {
-      console.error("Database Error: ", error); // Log detailed error
-      if (error.code === 11000 && error.keyPattern.email) {
-        res.status(409).json({ message: 'Email already in use' });
-      } else {
-        res.status(500).json({ message: 'Internal server error' });
-      }
+  res.clearCookie('token', { path: '/' });
+  req.session.destroy((err) => {
+    if (err) {
+      return res.send('Error logging out.');
     }
-    
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
+  });
+  res.redirect('/');
+
 };
+
+
+
 
 
 
@@ -228,8 +146,14 @@ exports.getAdminDashboard = async (req, res) => {
       description: 'Simple Blog created with NodeJs, Express & MongoDb.',
     };
 
-    const data = await Post.find();
-    res.render('admin/dashboard', { locals, data, layout: adminLayout });
+    const userId = req.userId;
+    
+    let userdata=[]
+    const user = await LoginUser.findById(userId)
+    userdata.push(user)
+    console.log(userdata,"user");
+    const data = await Post.find({ isActive: true });
+    res.render('admin/dashboard', { locals, data,userdata, layout: adminLayout });
   } catch (error) {
     console.error(error);
   }
@@ -241,7 +165,7 @@ exports.getAddPostPage = (req, res) => {
     title: 'Add Post',
     description: 'Simple Blog created with NodeJs, Express & MongoDb.',
   };
-  res.render('admin/add-post', { locals, layout: adminLayout });
+  res.render('admin/add-post', { locals, layout: EditLayout });
 };
 
 // Admin - Create New Post
@@ -269,7 +193,7 @@ exports.getEditPostPage = async (req, res) => {
     };
 
     const data = await Post.findOne({ _id: req.params.id });
-    res.render('admin/edit-post', { locals, data, layout: adminLayout });
+    res.render('admin/edit-post', { locals, data, layout: EditLayout });
   } catch (error) {
     console.error(error);
   }
@@ -297,10 +221,20 @@ exports.updatePost = async (req, res) => {
 // Admin - Delete Post
 exports.deletePost = async (req, res) => {
   try {
-    await Post.deleteOne({ _id: req.params.id });
-    res.redirect('/admindashboard');
+    // Update the isActive field to false instead of deleting the post
+    const result = await Post.updateOne(
+      { _id: req.params.id }, // Find the post by its ID
+      { $set: { isActive: false } } // Set the isActive field to false
+    );
+
+    if (result.nModified === 0) {
+      return res.status(404).json({ error: 'Post not found or already inactive' });
+    }
+
+    res.status(200).json({ message: 'Post is now inactive successfully' });
   } catch (error) {
-    console.error(error);
+    console.error(`Error updating post: ${error.message}`);
+    res.status(500).json({ error: 'Failed to update the post' });
   }
 };
 

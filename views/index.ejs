@@ -1,17 +1,22 @@
 
 
 <section class="articles">
-    <h2 class="article_heading">Latest Post</h2>
+  <h2 class="article_heading">Latest Posts</h2>
 
-    <ul class="article-ul">
-        <% data.forEach(post => { %>
-          <li>
-            <a href="/post/<%= post._id %>">
-              <span><%= post.title %></span>
-              <span class="article-list__date"><%= post.createdAt.toDateString() %></span>
-            </a>
-          </li>
-        <% }) %>
-      </ul>
-    <!-- <a href="#" class="pagination">&lt; view older posts</a> -->
+  <div class="articles-container">
+    <% data.forEach(post => { %>
+      <div class="article-card">
+        <div class="article-img">
+          <img src="\img\smiley-woman-with-headphones-working-laptop 1.png" alt="Post Thumbnail">
+        </div>
+        <div class="article-content">
+          <h3 class="article-title"><%= post.title %></h3>
+          <p class="article-date"><%= post.createdAt.toDateString() %></p>
+          <div class="article-controls">
+            <a href="/post/<%= post._id %>" class="btn btn-view">View</a>
+          </div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
 </section>

@@ -3,10 +3,6 @@
     <h2>View / Edit Post</h2>
 </div>
 
-<form action="/delete-post/<%= data._id %>?_method=DELETE" method="post">
- <input type="submit" value="Delete" class="btn-delete btn">
-</form>
-
 <form action="/edit-post/<%= data._id%>?_method=PUT" method="post">
 
     <label for="title"><b>Title</b></label>

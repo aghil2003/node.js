@@ -1,4 +1,6 @@
 const Post = require('../models/Post');
+const LoginUser = require('../models/Login-user');
+const EditLayout= '../views/layout/edit';
 
 // Home page: Fetch all posts
 exports.getAllPosts = async (req, res) => {
@@ -8,8 +10,8 @@ exports.getAllPosts = async (req, res) => {
   };
 
   try {
-    const data = await Post.find();
-    res.render('index', { locals, data });
+    const data = await Post.find({ isActive: true }).sort({ createdAt: -1 });;
+    res.render('index', { locals,data });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error fetching posts");
@@ -20,7 +22,7 @@ exports.getAllPosts = async (req, res) => {
 exports.getPostById = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await Post.findById({ _id: id });
+    const data = await Post.findById({ _id: id, isActive: true });
 
     const locals = {
       title: data.title,
@@ -31,12 +33,15 @@ exports.getPostById = async (req, res) => {
       locals,
       data,
       currentRoute: `/post/${id}`,
+      layout:EditLayout,
     });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error fetching the post");
   }
 };
+
+
 
 // Search for posts
 exports.searchPosts = async (req, res) => {
@@ -51,6 +56,7 @@ exports.searchPosts = async (req, res) => {
 
     const data = await Post.find({
       $or: [
+        { isActive: 'true',},
         { title: { $regex: new RegExp(searchNoSpecialChar, 'i') } },
         { body: { $regex: new RegExp(searchNoSpecialChar, 'i') } },
       ],
@@ -64,5 +70,19 @@ exports.searchPosts = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Error performing search");
+  }
+};
+
+
+exports.AboutUs= async (req, res) => {
+  try {
+    const locals = {
+      title: "NodeJs Blog",
+      description: "Simple Blog created with NodeJs, Express & MongoDb.",
+    };
+    res.render('about');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching posts");
   }
 };

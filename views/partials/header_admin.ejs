@@ -4,22 +4,20 @@
     <a href="/" class="header__logo">Admin Panel</a>
   
     <nav class="header__nav">
-      <ul>
-        <li>
-          <a href="/">Home</a>
-        </li>
-        <li>
-          <a href="/about">About</a>
-        </li>
-        <li>
-          <a href="/contact">Contact</a>
-        </li>
-      </ul>
+      
   
     </nav>
-  
-    <div class="header__button">
-      <a href="/logout">Logout</a>
+    <div>
+      <div class="dropdown" >
+        <% userdata.forEach(user => { %>
+              <button class="logoutBtn" style="text-align: right;">
+                Hello..<%= user.username %>
+              </button>
+              <div class="dropdown-content">
+                <a href="/logout">Logout</a>
+              </div>  
+        <% }) %>
+        </div>
     </div>
   
   </header>

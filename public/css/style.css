@@ -12,11 +12,16 @@
   --border-radius: 10px;
 }
 
+html, body {
+  overflow: hidden; /* Hides both horizontal and vertical scrollbars */
+}
+
 body {
   font-family: 'Poppins', sans-serif;
   color: var(--black);
   font-size: var(--font-size-base);
-  background-color: #FAF5EE;
+  background-color: #f5e6e8; 
+  /* background-color: #FAF5EE; */
   /* background-image: url("/img/img-noise-361x370.png"); */
   margin: 0;
 }
@@ -57,11 +62,7 @@ textarea {
 
 
 
-.container {
-    max-width: 982px;
-    margin: 0 auto;
-    padding: 0 10px;
-  }
+
   
   .main {
     padding: 20px 0;
@@ -326,10 +327,35 @@ textarea {
 }
 
 /* login style*/
+#loginPage{
+  display: flex;
+  padding-left: 115px;
+}
 
+#login-img-container{
+  position: relative;
+  background-color:white;
+  width: 700px;
+}
+#login-img1{
+ width: 400px;
+ position: absolute;
+ top: 75px;
+ left: 85px;
+}
+#login-img2{
+  position: absolute;
+  top: 35px;
+  right: 55px;
+ }
+#login-img3{
+  position: absolute;
+  bottom: 5px;
+  left: 25px;
+ }
 .login-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   background: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -361,11 +387,52 @@ h2 {
 
 /*signup style*/
 
+#register-container {
+  display: flex;
+  padding-left: 100px;
+}
+#register-img-container{
+  position: relative;
+  background-color:white;
+  width: 700px;
+  
+}
+#register-img1{
+ width: 300px;
+ position: absolute;
+ bottom: 45px;
+ right: 85px;
+}
+#register-img2{
+  position: absolute;
+  width: 90px;
+  top: 65px;
+  right: 75px;
+ }
+#register-img3{
+  width: 150px;
+  position: absolute;
+  bottom: 5px;
+  left: 25px;
+ }
+ #register-img4{
+  position: absolute;
+  width: 70px;
+  top: 90px;
+  left: -15px;
+ }
+ #register-img5{
+   position: relative; 
+   top: 60px;
+   left: 70px;
+   width: 200px;
+ }
 .signup-container {
   width: 100%;
   max-width: 400px;
   background: #fff;
   padding: 20px;
+  padding-bottom: 5px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -406,4 +473,671 @@ h2 {
 
 .login-link a:hover {
   text-decoration: underline;
+}
+
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+
+
+
+
+/* The button */
+.logoutBtn {
+  padding: 10px 20px;
+  background-color: #007bff; /* Blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+}
+
+.dropdown button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* The dropdown menu */
+.dropdown-content {
+  display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 1;
+    min-width: 100px;
+    padding-left: 30px;
+    right: 10px;
+}
+
+
+/* Dropdown items */
+.dropdown-content a {
+  display: block;
+  padding: 7px 10px;
+  width:30px;
+  text-decoration: none;
+  color: #333; /* Dark text color */
+  border-bottom: 1px solid #ddd; /* Divider between items */
+}
+
+.dropdown-content a:last-child {
+  border-bottom: none; /* No border for the last item */
+}
+
+.dropdown-content a:hover {
+  background-color: #f2f2f2; /* Light gray on hover */
+}
+
+/* Show the dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block; /* Make dropdown visible */
+}
+#chatMessages{
+  width: 628px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 5px;
+  position: absolute;
+  top: 100px;
+}
+ */
+
+
+/* // new.......... */
+
+
+/* body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+} */
+
+/* dashbord */
+.articles {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  overflow: visible; /* Ensures content isn't clipped */
+  animation: fadeIn 1s ease-in-out; /* Section fade-in animation */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.article_heading {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  animation: slideDown 0.8s ease-in-out; /* Heading animation */
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.articles-container {
+  display: flex; /* Arrange items in a horizontal row */
+  flex-wrap: nowrap; /* Prevent items from wrapping */
+  gap: 20px; /* Add spacing between cards */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-y: hidden; /* Prevent vertical scrolling */
+  padding: 10px; /* Add padding for better appearance */
+  scrollbar-width: thin; /* For Firefox: make scrollbar smaller */
+  animation: fadeIn 1.2s ease-in-out; /* Fade-in for the container */
+}
+
+.articles-container::-webkit-scrollbar {
+  height: 8px; /* Horizontal scrollbar height */
+}
+
+.articles-container::-webkit-scrollbar-thumb {
+  background: #ccc; /* Scrollbar thumb color */
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.articles-container::-webkit-scrollbar-thumb:hover {
+  background: #999; /* Darker color on hover */
+}
+
+.article-card {
+  min-width: 300px; /* Ensure all cards have a consistent width */
+  flex: 0 0 auto; /* Prevent shrinking or growing */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: scale(1); /* Default scale */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideInFromLeft 0.8s ease-in-out; /* Add slide-in animation for cards */
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.article-card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.article-img img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  animation: fadeIn 1.5s ease-in-out; /* Fade-in for images */
+}
+
+.article-content {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.article-title {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 10px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.article-date {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+  animation: fadeIn 1.8s ease-in-out;
+}
+
+.article-controls {
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-view {
+  background-color: #28a745;
+}
+
+.btn-view:hover {
+  background-color: #218838;
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+
+
+
+
+/* singnin dashbord  */
+
+.container {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  /* background-color: #f3f4f6; / */
+  background-color: #f5e6e8; /* Light, warm beige */
+  color: #333; /* Improve text contrast */
+  max-width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 50px;
+}
+
+.admin-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  background: linear-gradient(90deg, #ff512f, #dd2476); /* Bright red to magenta */
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+  border-radius: 8px; /* Rounded edges */
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-title::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -30%;
+  width: 150%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent 70%);
+  transform: rotate(25deg);
+  animation: shine 5s infinite linear;
+  z-index: 0;
+}
+
+.admin-title h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  z-index: 1; /* Stays above background effects */
+}
+
+.admin-title .button {
+  background: linear-gradient(90deg, #ff7e5f, #feb47b); /* Orange gradient */
+  color: #fff;
+  padding: 12px 20px;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Button shadow */
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.admin-title .button:hover {
+  background: #e76b5c; /* Darker orange on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(25deg) translateX(-150%);
+  }
+  100% {
+    transform: rotate(25deg) translateX(150%);
+  }
+}
+
+
+.admin-posts-container {
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.admin-posts {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scroll-behavior: smooth;
+}
+
+.post-card {
+  flex: 0 0 auto;
+  width: 300px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.post-card:hover {
+  transform: translateY(-10px); /* Lift on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Enhanced hover shadow */
+}
+
+.post-title {
+  margin: 15px 0 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.admin-post-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.admin-post-controls .btn {
+  flex: 1;
+  text-align: center;
+  padding: 10px 5px;
+  border: none;
+  border-radius: 30px; /* Rounded buttons */
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.btn-view {
+  background-color: #007bff;
+}
+
+.btn-view:hover {
+  background-color: #0056b3;
+}
+
+.btn-edit {
+  background-color: #ffc107;
+  color: #333; /* Darker text for contrast */
+}
+
+.btn-edit:hover {
+  background-color: #e0a800;
+}
+
+.btn-delete {
+  background-color: #dc3545;
+}
+
+.btn-delete:hover {
+  background-color: #c82333;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hidden {
+  display: none;
+}
+
+.imgDiv {
+  width: 100%; /* Automatically adjust width based on parent */
+  height: 200px; /* Fixed height for uniformity */
+  overflow: hidden;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f0f0;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle inner shadow */
+}
+
+.imgDiv img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image covers the entire div */
+  transition: transform 0.3s ease; /* Add hover zoom effect */
+}
+
+.imgDiv:hover img {
+  transform: scale(1.1); /* Slight zoom on hover */
+}
+
+/*chat-container*/
+
+
+      .chat-wrapper {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+        width: 30%;
+        background: #34495e;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 4px 0 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar h2 {
+        font-size: 24px;
+        text-align: center;
+        color: #2ecc71;
+        margin-bottom: 15px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar li {
+        padding: 12px 16px;
+        background: #2c3e50;
+        border-radius: 8px;
+        margin: 8px 0;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .sidebar li:hover {
+        background: #27ae60;
+    }
+
+    /* Chat Area Styling */
+    .chat-area {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        background: #ecf0f1;
+        padding: 15px;
+    }
+
+    .chat-header {
+        font-size: 22px;
+        font-weight: bold;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    #chatUserName{
+      display: none;
+    }
+    #messageArea{
+      max-height: 400px; /* Set the maximum height of the chat area */
+      overflow-y: auto; /* Enable vertical scrolling */
+      scrollbar-width: none;
+      padding: 10px; /* Add some padding inside the container */
+      background-color: #f9f9f9; /* Background color for better visibility */
+      border: 1px solid #ddd; /* Optional border for styling */
+      border-radius: 10px; /* Round the corners */
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); /* Optional inner shadow */
+      height: 250px;
+      display: none;
+    }
+
+    #input-message {
+        display: flex;
+        gap: 10px;
+        padding-top: 10px;
+      
+    }
+
+    .message-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #bdc3c7;
+        border-radius: 20px;
+        font-size: 16px;
+        width: 800px;
+        padding-top: 50px;
+      
+    }
+
+    .message-input button {
+        padding: 10px 20px;
+        background: #27ae60;
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .message-input button:hover {
+        background: #219150;
+    }
+
+    #backsign{
+      color: white;
+    }
+
+    #chatHead{
+      font-size: large;
+      font-weight: bolder;
+    }
+    #chatimg{
+      width: 900px;
+      height: 400px;
+    }
+    .current-user{
+      text-align: right;
+      margin: 10px;
+      color: black;
+    }
+    .distance-user{
+      text-align: left;
+      margin: 10px;
+      color: black;
+    }
+    #messageField{
+      padding-top: 10px;
+      display: none;
+    }
+    #sendMessage{
+      display: none;
+    }
+    .notification{
+      background-color: red;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      font-size: 12px;
+      display: none;
+    }
+    .userBtn{
+      display: flex;
+      justify-content: space-between;
+    }
+
+/* About Section */
+.about {
+  padding: 3rem 1rem;
+  /* background: linear-gradient(135deg, #f9f9f9, #eceff1); */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 2rem 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.about h1 {
+  font-size: 2.8rem;
+  color: #222;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.about p {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-top: 2rem;
+  text-transform: capitalize;
+}
+
+#notBell{
+  color: red;
+  display: none;
 }

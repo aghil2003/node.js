@@ -19,16 +19,13 @@ const LoginUserSchema = new Schema({
     required: true,
     minlength: 6 // Enforces a minimum password length
   },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now
-  },
-  role: { type: String, enum: ['Admin', 'User'], default: 'User' }, // Role field
-});
+  role: { 
+    type: String, 
+    enum: ['Admin', 'User'], default: 'User' }, // Role field
+  },{
+    timestamps: true // Automatically adds createdAt and updatedAt fields
+  });
+
 
 
 

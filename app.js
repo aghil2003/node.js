@@ -92,7 +92,7 @@ const Chat = require('./server/models/Chat');// Ensure this path points to your 
   });
 });
 
-  
+
 
 // Routes
 app.use('/', require('./server/routes/main'));

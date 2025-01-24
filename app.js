@@ -70,7 +70,7 @@ io.on('connection', (socket) => {
   
 
   
-  const Chat = require('../BLOGGING-NODE.JS/server/models/Chat'); // Ensure this path points to your Chat model
+const Chat = require('./server/models/Chat');// Ensure this path points to your Chat model
   io.on('connection', (socket) => {
   console.log('A user connected');
   // Handle the 'existsChat' event

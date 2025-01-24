@@ -54,6 +54,7 @@ io.on('connection', (socket) => {
   socket.broadcast.emit('message', message);
   socket.broadcast.emit('notification',data={
     senderId:message.sender_id,
+    message:message.message,
     isRead:false,
     date:new Date()
   });
@@ -92,83 +93,6 @@ io.on('connection', (socket) => {
 });
 
   
-
-// // Import the UnreadMessage model
-//  const Notification = require('./server/models/Notification');
-//  io.on('connection', (socket) => {
-//   console.log('A user connected:', socket.id);
-
-//   // Handle the 'newchat' event
-//   socket.on('newchat', (message) => {
-//     console.log("Received new chat message:", message);
-//     socket.broadcast.emit('message', message);
-//     console.log('Broadcast done:', message);
-//   });
-
-//   // Handle the 'sendMessage' event
-//   socket.on('sendMessage', async (data) => {
-//     const { sender_id, receiver_id, message } = data;
-
-//     try {
-//       // If receiver is offline, save the message as a notification
-//       if (!activeUsers.has(receiver_id)) {
-//         await Notification.create({
-//           sender_id,
-//           receiver_id,
-//           message,
-//         });
-//         console.log('Notification saved for offline user:', message);
-//       } else {
-//         // If receiver is online, emit the message directly
-//         socket.to(activeUsers.get(receiver_id)).emit('message', data);
-//       }
-//     } catch (err) {
-//       console.error('Error saving notification:', err);
-//     }
-//   });
-
-//   // Handle the 'existsChat' event to load chat and notifications
-//   socket.on('existsChat', async (data) => {
-//     const { sender_id, receiver_id } = data;
-
-//     try {
-//       // Fetch all chats between sender and receiver
-//       const chat = await Chat.find({
-//         $or: [
-//           { sender_id, receiver_id },
-//           { sender_id: receiver_id, receiver_id: sender_id },
-//         ],
-//       }).sort({ timestamp: 1 });
-
-//       // Fetch unread notifications
-//       const unreadNotifications = await Notification.find({
-//         receiver_id: sender_id,
-//         sender_id: receiver_id,
-//         isRead: false,
-//       });
-
-//       // Send both chats and notifications to the frontend
-//       socket.emit('loadchats', { chat: [...chat, ...unreadNotifications] });
-
-//       // Mark notifications as read and delete them from the database
-//       await Notification.deleteMany({
-//         receiver_id: sender_id,
-//         sender_id: receiver_id,
-//         isRead: false,
-//       });
-//       console.log('Unread notifications cleared for user:', sender_id);
-//     } catch (error) {
-//       console.error('Error fetching chats or notifications:', error);
-//     }
-//   });
-
-//   // Handle disconnection
-//   socket.on('disconnect', () => {
-//     console.log('A user disconnected:', socket.id);
-//   });
-// });});
-
-
 
 // Routes
 app.use('/', require('./server/routes/main'));

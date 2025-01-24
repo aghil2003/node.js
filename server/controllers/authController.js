@@ -4,8 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 
-// const adminLayout = '../views/layout/admin';
-// const EditLayout= '../views/layout/edit';
+
 
 const loginLayout = '../views/layout/login';
 
@@ -25,17 +24,6 @@ exports.getLoginPage = async (req, res) => {
   }
 };
 
-// exports.getSigninPage = async (req, res) => {
-//   try {
-//     const locals = {
-//       title: "Signin",
-//       description: "Simple Blog created with NodeJs, Express & MongoDb."
-//     };
-//     res.render('signup/signup', { locals, layout: '../views/layout/signup' });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 exports.getRegisterPage = async (req, res) => {
   try {

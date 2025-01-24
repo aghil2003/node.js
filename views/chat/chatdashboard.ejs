@@ -137,40 +137,18 @@ chatForm.addEventListener("submit", async (e) => {
 });
 
 
-socket.on('message', (message) => {
-  console.log("Received message from server:", message);
-  
-   if(senderId === message.receiver_id && receiverId=== message.sender_id){
-  const chatMessage = message.message;  // assuming `message` object has a 'message' property
-  console.log(chatMessage,"chatmesage");
-
-  const html = `<div class="distance-user"><h4>${chatMessage}</h4></div>`;
-  document.getElementById('messageArea').insertAdjacentHTML('beforeend', html);
-  
-  const messageArea = document.getElementById('messageArea');
-   requestAnimationFrame(() => {
-    messageArea.scrollTop = messageArea.scrollHeight;
-});
-}
-});
-
-
 socket.on('notification', (data) => {
   console.log("Incoming notification data:", data);
-  // Check if the notification corresponds to the currently open chat
   if (data.senderId === receiverId) {
-    // If the chat is open, display the message immediately in the chat area
     const html = `<div class="distance-user"><h4>${data.message}</h4></div>`;
     document.getElementById('messageArea').insertAdjacentHTML('beforeend', html);
 
-    // Scroll to the bottom of the chat
     const messageArea = document.getElementById('messageArea');
     messageArea.scrollTop = messageArea.scrollHeight;
-  } else {
-    // If the chat is not open, display a notification
+  }
+   else {
     const notification = document.getElementById(`notification-${data.senderId}`);
     if (notification) {
-      // Update or show the notification bubble
       let count = parseInt(notification.innerText) || 0;
       notification.innerText = count + 1;
       notification.style.display = 'block';

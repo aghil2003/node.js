@@ -1,8 +1,7 @@
 const Post = require('../models/Post');
  const LoginUser = require('../models/Login-user');
-// const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
-// const jwtSecret = process.env.JWT_SECRET;
+
+ 
 
 const adminLayout = '../views/layout/admin';
 const EditLayout= '../views/layout/edit';
@@ -238,27 +237,6 @@ exports.deletePost = async (req, res) => {
   }
 };
 
-// // Admin - Register User
-// exports.registerUser = async (req, res) => {
-//   try {
-//     const { username, password } = req.body;
-//     const hashedPassword = await bcrypt.hash(password, 10);
 
-//     const user = await User.create({ username, password: hashedPassword });
-//     res.status(201).json({ message: 'User Created', user });
-//   } catch (error) {
-//     if (error.code === 11000) {
-//       res.status(409).json({ message: 'Username already in use' });
-//     } else {
-//       res.status(500).json({ message: 'Internal server error' });
-//     }
-//   }
-// };
 
-// Admin - Logout
-// exports.logout = (req, res) => {
-//   res.clearCookie('token');
-//   res.redirect('/');
-// };
-//
 

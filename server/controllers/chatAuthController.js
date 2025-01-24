@@ -47,23 +47,6 @@ exports.postChatDashboard = async (req, res) => {
   }
 };
 
-// exports.saveChat = async (req,res)=>{
-//   try{
-//      var chat = new chat({
-//       sender_id:req.body.sender_id,
-//       receiver_id:req.body.receiver_id,
-//       message: req.body.message,
-//      });
-     
-//      const newChat =await chat.save();
-//      res.status(400).send({success:true,message:'chat saved',data:newChat})
-//   }catch(error){
-//     res.status(400).send({success:false,message:error.message})
-//   }
-// }
-
-
-
 exports.saveChat = async (req, res) => {
   try {
     // Create a new chat object

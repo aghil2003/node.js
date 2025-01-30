@@ -1,5 +1,4 @@
 const mongoose=require('mongoose');
-// const LoginUser = require('../models/Login-user.js'); 
 const connectDB= async()=>{
     
     try {
